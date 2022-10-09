@@ -16,4 +16,14 @@ router.post('/login', async (req: Request, res: Response, next: NextFunction) =>
     }
 });
 
+router.post('/user', async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const response = await userController.createUser(req.body);
+        res.send(response);
+    } catch (error) {
+        console.log(error);
+        next(error);
+    }
+});
+
 export default router;
