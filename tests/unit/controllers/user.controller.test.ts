@@ -45,7 +45,7 @@ describe('User Controller', () => {
         status: 'active'
     }
 
-    it('1. login function should return logged user', async () => {
+    it('should return logged user', async () => {
 
         const serviceSpy = jest.spyOn(apiService, 'login');
         serviceSpy.mockReturnValue(Promise.resolve(loggedUser));
@@ -55,7 +55,7 @@ describe('User Controller', () => {
         expect(response.user._id).toStrictEqual(loggedUser.user._id);
     });
 
-    it('2. create user should return "Duplicate entry"', async () => {
+    it('should return "Duplicate entry"', async () => {
         const createdUser = loggedUser.user;
         process.env.TOKEN = loggedUser.token;
         const serviceSpy = jest.spyOn(apiService, 'createUser');

@@ -1,4 +1,4 @@
-import { ActivateAssetInterface } from '../interfaces/activateAsset.interface';
+import { ActivateAssetInterface } from '../interfaces/asset.interface';
 import { ApiService } from '../services/api.service';
 const apiService = new ApiService();
 

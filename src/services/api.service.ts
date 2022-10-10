@@ -3,7 +3,7 @@ import * as dotenv from 'dotenv';
 dotenv.config();
 import { LoginBodyInterface } from '../interfaces/login.interface';
 import { CreateUserInterface } from '../interfaces/user.interface';
-import { ActivateAssetInterface } from '../interfaces/activateAsset.interface';
+import { ActivateAssetInterface } from '../interfaces/asset.interface';
 
 const config = {
     baseUrl: 'https://hummingbird-staging.podgroup.com',
