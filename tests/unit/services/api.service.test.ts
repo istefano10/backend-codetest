@@ -13,7 +13,7 @@ describe('Api Service', () => {
         username: 'test',
         password: 'test'
     };
-    
+
     const loggedUser = {
         token: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiI2MzNlZTg1ZjQzM2QwYzg3ZjRhN2JiYWEifQ.qtxGTKaaKtCDNbsNkxWGAUTkRJNH-AQacHLael2-SUU',
         user: {
@@ -58,10 +58,17 @@ describe('Api Service', () => {
         status: 'active'
     }
 
-    describe('login function', () => {
+    let mockFetch;
 
-        const mockFetch = fetch as jest.MockedFunction<typeof fetch>;
-        
+    beforeEach(() => {
+        mockFetch = fetch as jest.MockedFunction<typeof fetch>;
+    });
+
+    afterEach(() => {
+        mockFetch.mockReset();
+    });
+
+    describe('User', () => {
         it('should return the logged user', async () => {
             mockFetch.mockReturnValue(Promise.resolve(Promise.resolve(loggedUserResponse as any)) as any);
             const response = await apiService.login(loginMock);
@@ -72,10 +79,19 @@ describe('Api Service', () => {
         it('should return created user', async () => {
             process.env.TOKEN = loggedUser.token;
             mockFetch.mockReturnValue(Promise.resolve(Promise.resolve(createdUserResponse as any)) as any);
-    
             const response = await apiService.createUser(createUserBody);
-    
             expect(response.email).toStrictEqual(createUserBody.email);
+        });
+    });
+
+    describe('Assets', () => {
+        it('should return error', async () => {
+            mockFetch.mockReturnValue(Promise.reject('Error test') as any);
+            try {
+                await apiService.login(loginMock);
+            } catch (error) {
+                expect(error).toBe('Error test');
+            }
         });
     });
 

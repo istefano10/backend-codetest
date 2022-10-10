@@ -34,4 +34,15 @@ export class ApiService {
         }).then(res => res.json())
             .then(json => { return json });
     }
+
+    public async getAssets(accountId: string) {
+        return await fetch(`${config.baseUrl}/assets?accountId=${accountId}`, {
+            method: 'GET',
+            headers: {
+                Accept: 'application/json',
+                'X-Access-Token': `${process.env.TOKEN}`
+            }
+        }).then(res => res.json())
+            .then(json => { return json });
+    }
 }
