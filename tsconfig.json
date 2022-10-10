@@ -1,12 +1,14 @@
 {
   "compilerOptions": {
     "target": "esnext",
-    "module": "commonjs",                   
-    "lib": ["es6"],                     
+    "module": "commonjs",
+    "lib": [
+      "es6"
+    ],
     "allowJs": true,
-    "outDir": "build",                          
+    "outDir": "build",
     "rootDir": "src",
-    "strict": true,         
+    "strict": true,
     "noImplicitAny": false,
     "esModuleInterop": true,
     "resolveJsonModule": true,
@@ -14,9 +16,9 @@
     "skipLibCheck": true
   },
   "include": [
-      "src/**/*"
+    "src/**/*"
   ],
   "exclude": [
-      "node_modules"
+    "node_modules"
   ]
 }
