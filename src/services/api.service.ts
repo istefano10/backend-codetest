@@ -3,6 +3,7 @@ import * as dotenv from 'dotenv';
 dotenv.config();
 import { LoginBodyInterface } from '../interfaces/login.interface';
 import { CreateUserInterface } from '../interfaces/user.interface';
+import { ActivateAssetInterface } from '../interfaces/activateAsset.interface';
 
 const config = {
     baseUrl: 'https://hummingbird-staging.podgroup.com',
@@ -40,6 +41,20 @@ export class ApiService {
             method: 'GET',
             headers: {
                 Accept: 'application/json',
+                'X-Access-Token': `${process.env.TOKEN}`
+            }
+        }).then(res => res.json())
+            .then(json => { return json });
+    }
+
+    public async activateAsset(assetId: string, body: ActivateAssetInterface) {
+
+        return await fetch(`${config.baseUrl}/assets/${assetId}/subscribe`, {
+            method: 'PUT',
+            body: JSON.stringify(body),
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
                 'X-Access-Token': `${process.env.TOKEN}`
             }
         }).then(res => res.json())
