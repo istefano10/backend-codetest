@@ -9,3 +9,9 @@ npm start
 ```
 npm run test
 ```
+
+#### For run the project in docker
+```
+1. docker build -t pod .
+2. docker run -p 8080:8080 pod
+```
