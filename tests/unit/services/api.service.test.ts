@@ -1,4 +1,5 @@
 import fetch from 'node-fetch'
+import { ActivateAssetInterface } from '../../../src/interfaces/asset.interface';
 jest.mock('node-fetch', () => jest.fn());
 
 import { LoginBodyInterface } from '../../../src/interfaces/login.interface';
@@ -38,12 +39,6 @@ describe('Api Service', () => {
         }
     }
 
-    const createdUserResponse = {
-        json: function () {
-            return createUserBody;
-        }
-    }
-
     const createUserBody: CreateUserInterface = {
         accountId: 'c0d45e32-1c7f-58cb-aca9-b9b57b4ba9b7',
         permissions: [
@@ -56,6 +51,26 @@ describe('Api Service', () => {
         password: 'ivan.test2',
         email: 'ivan.stefanov2@testemail.com',
         status: 'active'
+    }
+
+    const createdUserResponse = {
+        json: function () {
+            return createUserBody;
+        }
+    }
+
+    const activateAssetBody: ActivateAssetInterface = {
+        "accountId": "c0d45e32-1c7f-58cb-aca9-b9b57b4ba9b7",
+        "subscription": {
+            "productId": "633ee85f656161fa565a44f7",
+            "subscriberAccountId": "c0d45e32-1c7f-58cb-aca9-b9b57b4ba9b7"
+        }
+    }
+
+    const activateAssetBodyResponse = {
+        json: function () {
+            return activateAssetBody;
+        }
     }
 
     let mockFetch;
@@ -88,10 +103,17 @@ describe('Api Service', () => {
         it('should return error', async () => {
             mockFetch.mockReturnValue(Promise.reject('Error test') as any);
             try {
-                await apiService.login(loginMock);
+                await apiService.getAssets(createUserBody.accountId);
             } catch (error) {
                 expect(error).toBe('Error test');
             }
+        });
+
+        it('should return activated asset', async () => {
+            process.env.TOKEN = loggedUser.token;
+            mockFetch.mockReturnValue(Promise.resolve(Promise.resolve(activateAssetBodyResponse as any)) as any);
+            const response = await apiService.activateAsset(createUserBody.username, activateAssetBody);
+            expect(response.accountId).toStrictEqual(createUserBody.accountId);
         });
     });
 
